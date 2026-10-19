@@ -51,9 +51,19 @@ def split_text(text: str, size: int, overlap: int) -> list[str]:
             pieces.append(piece)
         if end >= n:
             break
-        start = max(end - overlap, start + 1)
+        start = _next_start(text, start, end, overlap)
 
     return pieces
+
+
+def _next_start(text: str, start: int, end: int, overlap: int) -> int:
+    """Step back `overlap` characters, then forward to the next word start."""
+    nxt = max(end - overlap, start + 1)
+    if 0 < nxt < len(text) and not text[nxt - 1].isspace():
+        space = text.find(" ", nxt, end)
+        if space != -1:
+            nxt = space + 1
+    return nxt
 
 
 def chunk_documents(docs: Iterable[Document], size: int, overlap: int) -> list[Chunk]:

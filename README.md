@@ -69,6 +69,29 @@ or set `DOCS_DIR` in `.env`. Run `make ingest` again whenever the documents chan
 
 ---
 
+## Voice app
+
+A browser front end with speech in and out, on the same index and pipeline:
+
+```bash
+make app        # opens http://localhost:8501
+```
+
+```
+🎙️ speak / ⌨️ type ─▶ Whisper ─▶ local embedding search ─▶ Claude ─▶ 🔊 OpenAI TTS
+```
+
+- Needs `ANTHROPIC_API_KEY` for answers. Add `OPENAI_API_KEY` to `.env` to turn on the
+  microphone and spoken answers; without it the app works with typed questions.
+- Uses the `make ingest` index if there is one, and builds it otherwise.
+  **Re-index documents** in the sidebar picks up new or edited files.
+- Citation markers like [1] are shown on screen but not read aloud.
+
+For a deployable, OpenAI-only version with hybrid search and document upload, see
+[voice-rag-assistant](https://github.com/Vinoth-Suryanarayanan/voice-rag-assistant).
+
+---
+
 ## Configuration (`.env`)
 
 | Variable            | Default                  | What it does                              |
@@ -78,6 +101,7 @@ or set `DOCS_DIR` in `.env`. Run `make ingest` again whenever the documents chan
 | `EMBEDDING_MODEL`   | `BAAI/bge-small-en-v1.5` | Local embedding model (re-ingest if changed) |
 | `DOCS_DIR`          | `data/docs`              | Folder to index                           |
 | `TOP_K`             | `5`                      | Passages sent to Claude per question      |
+| `OPENAI_API_KEY`    | —                        | Voice app only: speech-to-text + speech   |
 | `CHUNK_SIZE`        | `1000`                   | Characters per passage                    |
 | `CHUNK_OVERLAP`     | `150`                    | Characters shared by neighbouring passages |
 

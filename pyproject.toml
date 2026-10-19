@@ -9,8 +9,10 @@ dependencies = [
     "anthropic>=0.40",
     "fastembed>=0.4",
     "numpy>=1.26",
+    "openai>=1.50",
     "pydantic-settings>=2.3",
     "pypdf>=4.0",
+    "streamlit>=1.42",
 ]
 
 [project.scripts]

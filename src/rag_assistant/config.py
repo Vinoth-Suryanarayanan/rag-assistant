@@ -2,7 +2,8 @@
 config.py — centralised settings, loaded from environment variables or .env.
 
 Nothing here is required at import time, so tests and `make ingest` work
-without an API key.  The key is checked only when `ask` actually calls Claude.
+without API keys.  Keys are checked only when something actually needs them:
+ANTHROPIC_API_KEY for answers, OPENAI_API_KEY for the voice app's speech.
 """
 
 from pathlib import Path
@@ -17,6 +18,12 @@ class Settings(BaseSettings):
     anthropic_api_key: str = ""
     answer_model: str = "claude-haiku-5-5"
     max_answer_tokens: int = 1024
+
+    # ── OpenAI (voice app only: Whisper speech-to-text + text-to-speech) ──────
+    openai_api_key: str = ""
+    transcribe_model: str = "whisper-1"
+    tts_model: str = "tts-1"
+    tts_voice: str = "nova"
 
     # ── Retrieval ─────────────────────────────────────────────────────────────
     embedding_model: str = "BAAI/bge-small-en-v1.5"

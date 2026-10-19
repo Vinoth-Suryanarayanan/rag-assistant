@@ -1,4 +1,4 @@
-.PHONY: setup install ingest ask test lint doctor help
+.PHONY: setup install ingest ask app test lint doctor help
 
 # ── Setup ─────────────────────────────────────────────────────────────────────
 
@@ -45,7 +45,12 @@ help:
 	@echo "  make setup            Install deps + create .env"
 	@echo "  make ingest           Index the docs folder (DOCS=path to override)"
 	@echo "  make ask Q=\"...\"      Ask a question about your docs"
+	@echo "  make app              Voice web app (Streamlit)"
 	@echo "  make test             Run all tests (no API keys or downloads needed)"
 	@echo "  make lint             Ruff linter"
 	@echo "  make doctor           Check prerequisites"
 	@echo ""
+
+# Voice web app (Streamlit). Needs ANTHROPIC_API_KEY; OPENAI_API_KEY enables voice.
+app:
+	uv run streamlit run app.py

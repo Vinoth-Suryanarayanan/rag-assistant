@@ -22,6 +22,12 @@ def test_long_text_respects_size_and_overlaps():
         assert set(a.split()[-3:]) & set(b.split()[:10])
 
 
+def test_overlap_never_starts_mid_word():
+    text = " ".join(["supercalifragilistic"] * 60)
+    for piece in split_text(text, size=100, overlap=20):
+        assert set(piece.split()) == {"supercalifragilistic"}
+
+
 def test_prefers_paragraph_boundaries():
     para = "A" * 70
     text = f"{para}\n\n{para}\n\n{para}"
